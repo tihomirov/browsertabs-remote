@@ -4,17 +4,19 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   const [messages, setMessages] = useState<string[]>([]);
+  const [socket, setSocket] = useState<WebSocket>();
 
   useEffect(() => {
-    const socket = new WebSocket('ws://192.168.31.111:8999');
+    const s = new WebSocket('ws://192.168.31.111:8999');
+    setSocket(s);
 
     // Connection opened
-    socket.addEventListener('open', event => {
-      socket.send('Hello Server!');
+    s.addEventListener('open', event => {
+      s.send('Hello Server!');
     });
 
     // Listen for messages
-    socket.addEventListener('message', event => {
+    s.addEventListener('message', event => {
       const message: string = event.data;
       console.log('Message from server', message);
       setMessages([
@@ -22,11 +24,14 @@ export default function App() {
         message
       ])
     });
+
+    return () => s.close();
   }, [])
 
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!!</Text>
+      <Text>Open up App.tsx to start working on your app!</Text>
+      <Text>Socket readyState - {socket?.readyState ?? 'NO SOCKET'}</Text>
       {messages.map((message, index) => (<Text key={index}>{index} - {message}</Text>))}
       <StatusBar style="auto" />
     </View>
