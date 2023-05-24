@@ -2,7 +2,7 @@
   "name": "browsertabs-remote",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start --dev-client",
+    "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web"
@@ -11,7 +11,7 @@
     "expo": "~48.0.15",
     "expo-status-bar": "~1.4.4",
     "react": "18.2.0",
-    "react-native": "0.71.7",
+    "react-native": "0.71.8",
     "expo-splash-screen": "~0.18.2"
   },
   "devDependencies": {
