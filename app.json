@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "plugins": ["@config-plugins/react-native-webrtc"],
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
