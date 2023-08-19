@@ -1,50 +1,49 @@
 import { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import {
-	ScreenCapturePickerView,
-	RTCPeerConnection,
-	RTCIceCandidate,
-	RTCSessionDescription,
-	RTCView,
-	MediaStream,
-	MediaStreamTrack,
-	mediaDevices,
-	registerGlobals
-} from 'react-native-webrtc';
+import Peer from 'react-native-peerjs';
 
-registerGlobals();
 let inited = false
 
 export default function App() {
 
   useEffect(() => {
-    if (inited) {
-      return;
-    }
-    let peerConstraints = {
-      iceServers: [
-        {
-          urls: 'stun:stun.l.google.com:19302'
-        }
-      ]
-    };
-    let peerConnection = new RTCPeerConnection( peerConstraints );
+    if (!inited) {
+      const peer = new Peer('0296b895-b0a8-96a9-cae1-fcc0ced0119R');
 
-    peerConnection.addEventListener( 'connectionstatechange', event => {} );
-    peerConnection.addEventListener( 'icecandidate', event => {} );
-    peerConnection.addEventListener( 'icecandidateerror', event => {} );
-    peerConnection.addEventListener( 'iceconnectionstatechange', event => {} );
-    peerConnection.addEventListener( 'icegatheringstatechange', event => {} );
-    peerConnection.addEventListener( 'negotiationneeded', event => {} );
-    peerConnection.addEventListener( 'signalingstatechange', event => {} );
-    peerConnection.addEventListener( 'track', event => {} );
+      peer.on('error', console.log);
 
-    inited = true;
+      peer.on('open', localPeerId => {
+        console.log('Local peer open with ID', localPeerId);
+      });
+
+      peer.on('connection', conn => {
+        console.log('Local peer has received connection.', conn);
+
+        conn.on('error', console.log);
+
+        conn.on('data', data => console.log('Received from remote peer', data));
+
+        conn.on('open', () => {
+          console.log('Local peer has opened connection.');
+          console.log('conn', conn);
+
+          let count = 0;
+          setInterval(() => {
+            console.log('Local peer sending data.', count);        
+            conn.send('Hello, this is the LOCAL peer! - ' + count);
+            count++;
+          }, 1000)
+        });
+      });
+
+			inited = true;
+		}
+
   }, [])
 
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>4 Open up App.js to start working on your app!</Text>
       {/* <StatusBar style="auto" /> */}
     </View>
   );
