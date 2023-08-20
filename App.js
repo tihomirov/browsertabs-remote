@@ -1,50 +1,40 @@
-import { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import Peer from 'react-native-peerjs';
 
-let inited = false
+const peer = new Peer();
 
 export default function App() {
+  const [peerId, setPeerId] = useState('');
+  const [connection, setConnection] = useState();
 
-  useEffect(() => {
-    if (!inited) {
-      const peer = new Peer('0296b895-b0a8-96a9-cae1-fcc0ced0119R');
+  const onPressConnect = useCallback(() => {
+    console.log('Peer connect ' + peerId); 
+    const conn = peer.connect(peerId);
+    setConnection(conn);
 
-      peer.on('error', console.log);
+    conn.on('open', () => {
+      console.log('Peer!!! open');
+      conn.send('hi - ' + count);
+    });
+  }, [peerId]);
 
-      peer.on('open', localPeerId => {
-        console.log('Local peer open with ID', localPeerId);
-      });
+  const onPressClose = useCallback(() => {
+    if (!connection) {
+      return;
+    }
 
-      peer.on('connection', conn => {
-        console.log('Local peer has received connection.', conn);
-
-        conn.on('error', console.log);
-
-        conn.on('data', data => console.log('Received from remote peer', data));
-
-        conn.on('open', () => {
-          console.log('Local peer has opened connection.');
-          console.log('conn', conn);
-
-          let count = 0;
-          setInterval(() => {
-            console.log('Local peer sending data.', count);        
-            conn.send('Hello, this is the LOCAL peer! - ' + count);
-            count++;
-          }, 1000)
-        });
-      });
-
-			inited = true;
-		}
-
-  }, [])
+    connection.close();
+  }, [connection]);
 
   return (
     <View style={styles.container}>
-      <Text>4 Open up App.js to start working on your app!</Text>
-      {/* <StatusBar style="auto" /> */}
+      <Text>2 Open up App.js to start working on your app!</Text>
+      <TextInput style={styles.input} onChangeText={setPeerId} value={peerId} />
+      <Button onPress={onPressConnect} title="Connect" color="#841584"/>
+      {connection && (
+        <Button onPress={onPressClose} title="Close" color="#841584"/>
+      )}
     </View>
   );
 }
@@ -55,5 +45,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
   },
 });
