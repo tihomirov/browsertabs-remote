@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true
+  }
+}
