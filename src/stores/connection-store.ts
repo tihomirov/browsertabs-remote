@@ -13,12 +13,17 @@ export class ConnectionStore {
   async connection(peerId: string): Promise<void> {
     const connection = await connectionService.addTabConnection(peerId);
 
-    this._connections.add(connection);
+    runInAction(() => {
+      this._connections.add(connection);
+		});
   }
 
   async close(peerId: string): Promise<void> {
     const closedConnection = await connectionService.closeTabConnection(peerId);
-    this._connections.delete(closedConnection);
+
+    runInAction(() => {
+      this._connections.delete(closedConnection);
+		});
   }
 
   @computed
