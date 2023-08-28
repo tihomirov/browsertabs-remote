@@ -1,9 +1,9 @@
-import {ConnectionStore} from './connection-store';
+import {ConnectionsStore} from './connections-store';
 
 export class RootStore {
-	connectionStore: ConnectionStore;
+	connectionsStore: ConnectionsStore;
 
 	constructor() {
-		this.connectionStore = new ConnectionStore();
+		this.connectionsStore = new ConnectionsStore();
 	}
 }

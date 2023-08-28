@@ -21,6 +21,7 @@
     "react-native": "0.71.8",
     "react-native-peerjs": "^1.0.4",
     "react-native-webrtc": "~106.0.6",
+    "rxjs": "^7.8.1",
     "typescript": "^4.9.4"
   },
   "devDependencies": {
