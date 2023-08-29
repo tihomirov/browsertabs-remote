@@ -1,6 +1,6 @@
 import {makeObservable, observable, runInAction, computed} from 'mobx';
 
-import { connectionsService, Connection } from '../services';
+import {connectionsService, Connection} from '../services';
 
 export class ConnectionsStore {
   private readonly _connections: Map<string, Connection> = observable.map();
@@ -14,19 +14,19 @@ export class ConnectionsStore {
 
     runInAction(() => {
       this._connections.set(peerId, connection);
-		});
+    });
   }
 
   @computed
-	get connections(): Array<[string, Connection]> {
-		return [...this._connections.entries()];
-	}
+  get connections(): Array<[string, Connection]> {
+    return [...this._connections.entries()];
+  }
 
   async close(peerId: string): Promise<void> {
     runInAction(() => {
       this._connections.get(peerId)?.dispose();
       this._connections.delete(peerId);
-		});
+    });
   }
 
   @computed

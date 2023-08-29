@@ -17,41 +17,41 @@ export class Connection {
     this._connection = this._peer.connect(peerId);
     
     this.open$ = fromEventPattern(
-			handler => this._connection.on('open', handler),
-			handler => this._connection.off('open', handler),
+      handler => this._connection.on('open', handler),
+      handler => this._connection.off('open', handler),
       () => undefined,
-		).pipe(
+    ).pipe(
       takeUntil(this._unsubscribeSubject$)
     );
     
     this.error$ = fromEventPattern(
-			handler => this._connection.on('error', handler),
-			handler => this._connection.off('error', handler),
+      handler => this._connection.on('error', handler),
+      handler => this._connection.off('error', handler),
       (data: {type: PeerErrorType}) => data,
-		).pipe(
+    ).pipe(
       takeUntil(this._unsubscribeSubject$)
     );
     
     this.close$ = fromEventPattern(
-			handler => this._connection.on('close', handler),
-			handler => this._connection.off('close', handler),
+      handler => this._connection.on('close', handler),
+      handler => this._connection.off('close', handler),
       () => undefined,
-		).pipe(
+    ).pipe(
       takeUntil(this._unsubscribeSubject$)
     );
     
     this.message$ = fromEventPattern(
-			handler => this._connection.on('data', handler),
-			handler => this._connection.off('data', handler),
-		).pipe(
+      handler => this._connection.on('data', handler),
+      handler => this._connection.off('data', handler),
+    ).pipe(
       takeUntil(this._unsubscribeSubject$),
-			map((data) => data
-				// tabMessageTypeguard(request)
-				// 	? {...request, tabId: sender.tab?.id}
-				// 	: undefined
-			),
-			filter(isSomething)
-		);
+      map((data) => data
+        // tabMessageTypeguard(request)
+        // 	? {...request, tabId: sender.tab?.id}
+        // 	: undefined
+      ),
+      filter(isSomething)
+    );
   }
 
   get tabInfo$(): Observable<TabInfo> {
@@ -65,8 +65,10 @@ export class Connection {
         return this.message$.pipe(
           tap((data) => console.log('LOG message$', data)),
           map(message => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             if (message?.type === 'HandshakeResponse') {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
               return message.tabInfo;
             }

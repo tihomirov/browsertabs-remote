@@ -1,7 +1,7 @@
-import { FC } from 'react';
+import {FC} from 'react';
 
-import { RootStore, StoreProvider } from './stores';
-import { Home } from './screens';
+import {RootStore, StoreProvider} from './stores';
+import {Home} from './screens';
 
 const rootStore = new RootStore();
 

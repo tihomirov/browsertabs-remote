@@ -1,9 +1,9 @@
-import { FC, useEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import {FC, useEffect, useState} from 'react';
+import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import { Connection } from '../../services';
-import { useStores } from '../../hooks';
+import {Connection} from '../../services';
+import {useStores} from '../../hooks';
 
 type ItemProps = Readonly<{
   connection: Connection,
@@ -29,11 +29,11 @@ export const ConnectionList: FC = observer(() => {
   const {connectionsStore} = useStores();
 
   return (
-      <FlatList
-        data={connectionsStore.connections}         
-        renderItem={({item}) => <Item connection={item[1]}  />}
-        keyExtractor={item => item[0]} 
-      />
+    <FlatList
+      data={connectionsStore.connections}         
+      renderItem={({item}) => <Item connection={item[1]}  />}
+      keyExtractor={item => item[0]} 
+    />
   );
 });
 

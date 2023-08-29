@@ -1,9 +1,9 @@
-import { FC, useCallback, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import {FC, useCallback, useState} from 'react';
+import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import { ConnectionList } from '../../components/connection-list';
-import { useStores } from '../../hooks';
+import {ConnectionList} from '../../components/connection-list';
+import {useStores} from '../../hooks';
 
 export const Home: FC = observer(() => {
   const {connectionsStore} = useStores();
@@ -18,15 +18,15 @@ export const Home: FC = observer(() => {
   }, [connectionsStore, peerId]);
 
   return (
-      <View style={styles.container}>
-        <Text>2 Open up App.js to start working on your app!</Text>
-        <TextInput style={styles.input} onChangeText={setPeerId} value={peerId} />
-        <Button onPress={onPressConnect} title="Connect" color="#841584"/>
-        {connectionsStore.hasConnections && (
-          <Button onPress={onPressClose} title="Close" color="#841584"/>
-        )}
-        <ConnectionList />
-      </View>
+    <View style={styles.container}>
+      <Text>2 Open up App.js to start working on your app!</Text>
+      <TextInput style={styles.input} onChangeText={setPeerId} value={peerId} />
+      <Button onPress={onPressConnect} title="Connect" color="#841584"/>
+      {connectionsStore.hasConnections && (
+        <Button onPress={onPressClose} title="Close" color="#841584"/>
+      )}
+      <ConnectionList />
+    </View>
   );
 });
 
