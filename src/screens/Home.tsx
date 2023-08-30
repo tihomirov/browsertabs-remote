@@ -2,10 +2,10 @@ import {FC, useCallback, useState} from 'react';
 import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {ConnectionList} from '../../components/connection-list';
-import {useStores} from '../../hooks';
+import {ConnectionList} from '../components/connection-list';
+import {useStores} from '../hooks';
 
-export const Home: FC = observer(() => {
+export const HomeScreen: FC = observer(() => {
   const {connectionsStore} = useStores();
   const [peerId, setPeerId] = useState('');
 
