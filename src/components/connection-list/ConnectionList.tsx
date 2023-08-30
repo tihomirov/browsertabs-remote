@@ -1,37 +1,29 @@
-import {FC, useEffect, useState} from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {FC} from 'react';
+import {Text, View, FlatList, Button, StyleSheet} from 'react-native';
 import {observer} from 'mobx-react-lite';
 
-import {Connection} from '../../services';
+import {ConnectionItem} from '../../components/connection-item';
 import {useStores} from '../../hooks';
-
-type ItemProps = Readonly<{
-  connection: Connection,
-}>
-
-const Item: FC<ItemProps> = ({connection}) => {
-  const [tabTitle, setTabTitle] = useState('');
-
-  useEffect(() => {
-    connection.tabInfo$.subscribe((tabInfo) => {
-      setTabTitle(tabInfo.title);
-    })
-  }, [connection])
-
-  return (
-    <View style={styles.item}>
-      <Text style={styles.title}>{tabTitle}</Text>
-    </View>
-  )
-}
 
 export const ConnectionList: FC = observer(() => {
   const {connectionsStore} = useStores();
 
+  if (connectionsStore.connections.length === 0) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>No connection yet.</Text>
+        <Button
+          title="Add Connection"
+          onPress={() => console.log('Open new page')}
+        />
+      </View>
+    )
+  }
+
   return (
     <FlatList
       data={connectionsStore.connections}         
-      renderItem={({item}) => <Item connection={item[1]}  />}
+      renderItem={({item}) => <ConnectionItem connection={item[1]}  />}
       keyExtractor={item => item[0]} 
     />
   );
@@ -39,16 +31,12 @@ export const ConnectionList: FC = observer(() => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // marginTop: StatusBar.currentHeight || 0,
-  },
-  item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
+    flex: 1,
+    justifyContent: 'center',
     marginHorizontal: 16,
   },
   title: {
-    fontSize: 32,
+    textAlign: 'center',
+    marginVertical: 8,
   },
 });

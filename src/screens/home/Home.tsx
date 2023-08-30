@@ -19,7 +19,7 @@ export const Home: FC = observer(() => {
 
   return (
     <View style={styles.container}>
-      <Text>2 Open up App.js to start working on your app!</Text>
+      <Text>1 Open up App.js to start working on your app!</Text>
       <TextInput style={styles.input} onChangeText={setPeerId} value={peerId} />
       <Button onPress={onPressConnect} title="Connect" color="#841584"/>
       {connectionsStore.hasConnections && (
