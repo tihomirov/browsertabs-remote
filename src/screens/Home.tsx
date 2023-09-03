@@ -32,12 +32,9 @@ export const HomeScreen: FC = observer(() => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
-    marginBottom: 40,
-    flex: 1,
+    width: '100%',
+    height: '100%',
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   input: {
     height: 40,
