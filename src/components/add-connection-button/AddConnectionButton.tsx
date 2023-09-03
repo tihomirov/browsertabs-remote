@@ -24,11 +24,6 @@ export const AddConnectionButton: FC = () => {
 
 const styles = StyleSheet.create({
   button: {
-    display: 'flex',
-    flexDirection: 'row',
-    gap: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
     padding: 4,
     marginVertical: 4,
     borderColor: '#dfe5eb',

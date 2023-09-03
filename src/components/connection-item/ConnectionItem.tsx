@@ -46,8 +46,7 @@ export const listRenderConnectionItem: ListRenderItem<[string, Connection]> = ({
 
 const styles = StyleSheet.create({
   item: {
-    width: '100%',
-    display: 'flex',
+    flex: 1,
     flexDirection: 'row',
     gap: 8,
     alignItems: 'center',
