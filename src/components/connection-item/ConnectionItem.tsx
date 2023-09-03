@@ -27,7 +27,7 @@ const ConnectionItem: FC<ItemProps> = ({connection}) => {
   if (!tabInfo) {
     return (
       <View style={itemClassName}>
-        <Loader size="small" />
+        <Loader size={20} />
       </View>
     )
   }
