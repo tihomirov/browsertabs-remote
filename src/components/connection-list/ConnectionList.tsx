@@ -25,7 +25,9 @@ export const ConnectionList: FC = observer(() => {
           keyExtractor={item => item[0]} 
         />
       </View>
-      <AddConnectionButton />
+      <View style={styles.buttonContainer}>
+        <AddConnectionButton />
+      </View>
     </View>
   );
 });
@@ -36,8 +38,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     paddingVertical: 12,
     justifyContent: 'space-between',
+    gap: 8,
   },
   listContainer: {
     flexGrow: 1,
+  },
+  buttonContainer: {
+    paddingHorizontal: '10%',
   }
 });
