@@ -1,6 +1,8 @@
-import {FC, useEffect, useMemo, useState} from 'react';
-import {StyleSheet, Text, View, Image, ListRenderItem, useColorScheme} from 'react-native';
+import {FC, useCallback, useEffect, useMemo, useState} from 'react';
+import {StyleSheet, Text, View, Image, ListRenderItem, useColorScheme, Pressable} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
+import {RootStackNavigationProp, ScreenId} from '../../navigation';
 import {Loader} from '../../components/loader';
 import {Connection} from '../../services';
 import {TabInfo} from '../../types';
@@ -11,12 +13,19 @@ type ItemProps = Readonly<{
 }>
 
 const ConnectionItem: FC<ItemProps> = ({connection}) => {
+  const navigation = useNavigation<RootStackNavigationProp>();
   const theme = useColorScheme();
   const [tabInfo, setTabInfo] = useState<TabInfo | undefined>(undefined);
   const isDarkTheme = theme === 'dark';
 
   const itemClassName = useMemo(() => [styles.item, isDarkTheme ? styles.itemDark : styles.itemLight], [isDarkTheme])
   const titleClassName = useMemo(() => [styles.title, isDarkTheme ? styles.titleDark : styles.titleLight], [isDarkTheme])
+
+  const onPress = useCallback(() => {
+    navigation.navigate(ScreenId.Connection, {
+      peerId: connection.peerId
+    })
+  }, [navigation, connection])
 
   useEffect(() => {
     const subbscription = connection.tabInfo$.subscribe(setTabInfo);
@@ -33,12 +42,14 @@ const ConnectionItem: FC<ItemProps> = ({connection}) => {
   }
 
   return (
-    <View style={itemClassName}>
-      {tabInfo.favIconUrl && (
-        <Image source={{uri: tabInfo.favIconUrl}} style={{width: 16, height: 16}} />
-      )}
-      <Text style={titleClassName}>{tabInfo.title}</Text>
-    </View>
+    <Pressable onPress={onPress}>
+      <View style={itemClassName}>
+        {tabInfo.favIconUrl && (
+          <Image source={{uri: tabInfo.favIconUrl}} style={{width: 16, height: 16}} />
+        )}
+        <Text style={titleClassName}>{tabInfo.title}</Text>
+      </View>
+    </Pressable>
   )
 }
 

@@ -2,8 +2,8 @@ import type {Peer, DataConnection, PeerErrorType} from 'peerjs';
 import {fromEventPattern, Observable, Subject} from 'rxjs';
 import {filter, map, takeUntil, switchMap, tap} from 'rxjs/operators';
 
-import {TabInfo} from '../types'
-import {isSomething} from '../utils'
+import {TabInfo} from '../types';
+import {isSomething} from '../utils';
 
 export class Connection {
   readonly open$: Observable<void>;  
@@ -13,7 +13,10 @@ export class Connection {
   private readonly _connection: DataConnection;
   private readonly _unsubscribeSubject$ = new Subject<void>();
 
-  constructor(private readonly _peer: Peer, peerId: string) {
+  constructor(
+    private readonly _peer: Peer, 
+    readonly peerId: string
+  ) {
     this._connection = this._peer.connect(peerId);
     
     this.open$ = fromEventPattern(

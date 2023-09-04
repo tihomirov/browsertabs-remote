@@ -5,7 +5,7 @@ import {observer} from 'mobx-react-lite';
 import {colors} from '../colors';
 import {useStores} from '../hooks';
 
-export const AddConnection: FC = observer(() => {
+export const AddConnectionScreen: FC = observer(() => {
   const {connectionsStore} = useStores();
   const [peerId, setPeerId] = useState('');
   const theme = useColorScheme();
