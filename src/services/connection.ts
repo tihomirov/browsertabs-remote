@@ -1,6 +1,6 @@
 import type {Peer, DataConnection, PeerErrorType} from 'peerjs';
-import {fromEventPattern, Observable, Subject} from 'rxjs';
-import {filter, map, takeUntil, switchMap, tap} from 'rxjs/operators';
+import {fromEventPattern, Observable, Subject, BehaviorSubject} from 'rxjs';
+import {filter, map, takeUntil} from 'rxjs/operators';
 
 import {TabInfo} from '../types';
 import {isSomething} from '../utils';
@@ -12,6 +12,7 @@ export class Connection {
   readonly message$: Observable<unknown>;
   private readonly _connection: DataConnection;
   private readonly _unsubscribeSubject$ = new Subject<void>();
+  private readonly _tabInfo$ = new BehaviorSubject<TabInfo | undefined>(undefined);
 
   constructor(
     private readonly _peer: Peer, 
@@ -24,7 +25,7 @@ export class Connection {
       handler => this._connection.off('open', handler),
       () => undefined,
     ).pipe(
-      takeUntil(this._unsubscribeSubject$)
+      takeUntil(this._unsubscribeSubject$),
     );
     
     this.error$ = fromEventPattern(
@@ -55,31 +56,32 @@ export class Connection {
       ),
       filter(isSomething)
     );
+
+    this.open$.subscribe(() => {
+      this._connection.send({
+        type: 'HandshakeRequest'
+      });
+    })
+
+    this.message$.subscribe((message) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      if (message?.type === 'HandshakeResponse') {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        this._tabInfo$.next(message.tabInfo)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        // return message.tabInfo;
+      }
+    })
+    
   }
 
   get tabInfo$(): Observable<TabInfo> {
-    return this.open$.pipe(
-      tap((data) => console.log('LOG open$', data)),
-      switchMap(() => {
-        this._connection.send({
-          type: 'HandshakeRequest'
-        });
-
-        return this.message$.pipe(
-          tap((data) => console.log('LOG message$', data)),
-          map(message => {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            if (message?.type === 'HandshakeResponse') {
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              return message.tabInfo;
-            }
-          }),
-          filter(isSomething)
-        )
-      })
-    )
+    return this._tabInfo$.pipe(
+      filter(isSomething)
+    );
   }
 
   dispose(): void {

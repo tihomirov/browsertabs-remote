@@ -1,10 +1,18 @@
 import {FC} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {useRoute, RouteProp} from '@react-navigation/native';
+
+import {TabInfo} from '../components/tab-info';
+import {RootStackParamList, ScreenId} from '../navigation';
+
+type ConnectionScreenRouteProp = RouteProp<RootStackParamList, ScreenId.Connection>;
 
 export const ConnectionScreen: FC = () => {
+  const route = useRoute<ConnectionScreenRouteProp>();
+
   return (
     <View style={styles.container}>
-      <Text>Connection Screen</Text>
+      <TabInfo peerId={route.params.peerId} />
     </View>
   );
 };

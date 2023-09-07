@@ -1,0 +1,83 @@
+import {FC, useEffect, useMemo, useState} from 'react';
+import {StyleSheet, Text, View, Image, useColorScheme} from 'react-native';
+
+import {Loader} from '../loader';
+import {TabInfo as TabInfoType} from '../../types';
+import {colors} from '../../colors';
+import {useStores} from '../../hooks';
+
+type TabInfoProps = Readonly<{
+  peerId: string,
+}>
+
+export const TabInfo: FC<TabInfoProps> = ({peerId}) => {
+  const {connectionsStore} = useStores()
+  const theme = useColorScheme();
+  const isDarkTheme = theme === 'dark';
+  const [tabInfo, setTabInfo] = useState<TabInfoType | undefined>(undefined);
+
+  const containerClassName = useMemo(() => [styles.container, isDarkTheme ? styles.containerDark : styles.containerLight], [isDarkTheme])
+  const titleClassName = useMemo(() => [styles.title, isDarkTheme ? styles.titleDark : styles.titleLight], [isDarkTheme])
+
+  useEffect(() => {
+    connectionsStore.setCurrentConnection(peerId);
+  }, [peerId])
+
+  useEffect(() => {
+    if (!connectionsStore.currentConnection) {
+      return;
+    }
+
+    const subbscription = connectionsStore.currentConnection.tabInfo$.subscribe(setTabInfo);
+
+    return () => subbscription.unsubscribe();
+  }, [connectionsStore.currentConnection])
+
+  if (!tabInfo) {
+    return (
+      <View style={containerClassName}>
+        <Loader size={20} />
+      </View>
+    )
+  }
+
+  return (
+    <View style={containerClassName}>
+      {tabInfo.favIconUrl && (
+        <Image source={{uri: tabInfo.favIconUrl}} style={{width: 16, height: 16}} />
+      )}
+      <Text style={titleClassName}>{tabInfo.title}</Text>
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
+    padding: 8,
+    marginVertical: 8,
+    borderColor: '#dfe5eb',
+    borderWidth: 1,
+    borderRadius: 4,
+  },
+  containerLight: {
+    backgroundColor: colors.backgroundColorLight,
+    color: colors.fontColorLight,
+  },
+  containerDark: {
+    backgroundColor: colors.backgroundColorDark,
+    color: colors.fontColorDark,
+  },
+  title: {
+    fontSize: 16,
+  },
+  titleLight: {
+    color: colors.fontColorLight,
+  },
+  titleDark: {
+    color: colors.fontColorDark,
+  },
+});
