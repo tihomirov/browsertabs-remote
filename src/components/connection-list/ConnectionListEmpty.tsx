@@ -12,7 +12,7 @@ export type RootStackParamList = {
 export const ConnectionListEmpty: FC = observer(() => {
   const {connectionsStore} = useStores();
 
-  if (connectionsStore.connections.length > 0) {
+  if (connectionsStore.connectionIds.length > 0) {
     return null;
   }
 

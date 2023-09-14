@@ -20,7 +20,7 @@ export const ConnectionList: FC = observer(() => {
       <View style={styles.listContainer}>
         <ConnectionListEmpty />
         <FlatList
-          data={connectionsStore.connections}         
+          data={connectionsStore.connectionIds}         
           renderItem={listRenderConnectionItem}
           keyExtractor={item => item[0]} 
         />

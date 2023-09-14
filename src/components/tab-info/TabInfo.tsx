@@ -11,7 +11,7 @@ type TabInfoProps = Readonly<{
 }>
 
 export const TabInfo: FC<TabInfoProps> = ({peerId}) => {
-  const {connectionsStore} = useStores()
+  const {connectionsStore} = useStores();
   const theme = useColorScheme();
   const isDarkTheme = theme === 'dark';
   const [tabInfo, setTabInfo] = useState<TabInfoType | undefined>(undefined);
@@ -20,18 +20,9 @@ export const TabInfo: FC<TabInfoProps> = ({peerId}) => {
   const titleClassName = useMemo(() => [styles.title, isDarkTheme ? styles.titleDark : styles.titleLight], [isDarkTheme])
 
   useEffect(() => {
-    connectionsStore.setCurrentConnection(peerId);
+    const subbscription = connectionsStore.getTabInfo$(peerId)?.subscribe(setTabInfo);
+    return () => subbscription?.unsubscribe();
   }, [peerId])
-
-  useEffect(() => {
-    if (!connectionsStore.currentConnection) {
-      return;
-    }
-
-    const subbscription = connectionsStore.currentConnection.tabInfo$.subscribe(setTabInfo);
-
-    return () => subbscription.unsubscribe();
-  }, [connectionsStore.currentConnection])
 
   if (!tabInfo) {
     return (

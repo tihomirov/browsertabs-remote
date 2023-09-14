@@ -25,14 +25,14 @@ export const AddConnectionScreen: FC = observer(() => {
       return;
     }
 
-    connectionsStore.connection(peerId);
+    connectionsStore.createConnection(peerId);
     navigation.navigate(ScreenId.Connection, {
       peerId: peerId
     })
   }, [connectionsStore, peerId, navigation]);
 
   const onPressClose = useCallback(() => {
-    connectionsStore.close(peerId);
+    connectionsStore.closeConnection(peerId);
   }, [connectionsStore, peerId]);
 
   return (

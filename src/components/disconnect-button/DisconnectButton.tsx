@@ -20,7 +20,7 @@ export const DisconnectButton: FC<DisconnectButtonProps> = ({peerId}) => {
   const buttonClassName = useMemo(() => [styles.button, isDarkTheme ? styles.buttonDark : styles.buttonLight], [isDarkTheme])
 
   const onClick = useCallback(() => {
-    connectionsStore.close(peerId);
+    connectionsStore.closeConnection(peerId);
     navigation.navigate(ScreenId.Home);
   }, [connectionsStore, peerId, navigation]);
 
