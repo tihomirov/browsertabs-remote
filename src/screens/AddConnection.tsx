@@ -1,7 +1,7 @@
 import {FC, useCallback, useState, useMemo} from 'react';
 import {StyleSheet, Text, View, TextInput, Button, useColorScheme} from 'react-native';
 import {observer} from 'mobx-react-lite';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, StackActions} from '@react-navigation/native';
 
 import {RootStackNavigationProp, ScreenId} from '../navigation';
 import {colors} from '../colors';
@@ -26,9 +26,9 @@ export const AddConnectionScreen: FC = observer(() => {
     }
 
     connectionsStore.createConnection(peerId);
-    navigation.navigate(ScreenId.Connection, {
+    navigation.dispatch(StackActions.replace(ScreenId.Connection, {
       peerId: peerId
-    })
+    }));
   }, [connectionsStore, peerId, navigation]);
 
   const onPressClose = useCallback(() => {
