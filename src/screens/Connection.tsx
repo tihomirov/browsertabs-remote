@@ -3,18 +3,20 @@ import {StyleSheet, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import {Action} from 'browsertabs-remote-common/src/common';
+import {useNavigation} from '@react-navigation/native';
 
 import {TabInfo} from '../components/tab-info';
 import {ActionList} from '../components/action-list';
 import {DisconnectButton} from '../components/disconnect-button';
-import {RootStackParamList, ScreenId} from '../navigation';
+import {RootStackParamList, RootStackNavigationProp, ScreenId} from '../navigation';
 import {useStores} from '../hooks';
 
 type ConnectionScreenRouteProp = RouteProp<RootStackParamList, ScreenId.Connection>;
 
 export const ConnectionScreen: FC = observer(() => {
   const route = useRoute<ConnectionScreenRouteProp>();
-  const {currentConnectionStore} = useStores();
+  const navigation = useNavigation<RootStackNavigationProp>();
+  const {currentConnectionStore, connectionsStore} = useStores();
   const [actions, setActions] = useState<ReadonlyArray<Action>>([])
   const peerId = route.params.peerId;
 
@@ -23,7 +25,16 @@ export const ConnectionScreen: FC = observer(() => {
 
     const actionSubbscription = currentConnectionStore.actions$?.subscribe(setActions);
 
-    return () => actionSubbscription?.unsubscribe();
+    const closeSubbscription = currentConnectionStore.close$?.subscribe(() => {
+      currentConnectionStore.clearCurrentConnection();
+      connectionsStore.closeConnection(peerId);
+      navigation.navigate(ScreenId.Home);
+    });
+
+    return () => {
+      actionSubbscription?.unsubscribe();
+      closeSubbscription?.unsubscribe();
+    }
   }, [currentConnectionStore, peerId])
 
   return (

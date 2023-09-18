@@ -24,9 +24,18 @@ export class CurrentConnectionStore {
     return this._currentConnection?.actions$;
   }
 
+  @computed
+  get close$(): Observable<void> | undefined {
+    return this._currentConnection?.close$;
+  }
+
   setCurrentConnectionId(peerId: string) {
     const connection = connectionsService.getConnection(peerId);
 
     runInAction(() => this._currentConnection = connection);
+  }
+
+  clearCurrentConnection() {
+    runInAction(() => this._currentConnection = undefined);
   }
 }
