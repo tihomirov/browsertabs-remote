@@ -49,6 +49,10 @@ export class ConnectionsStore {
     return [...this._connections.keys()];
   }
 
+  getConnectionClose$(peerId: string): Observable<void> | undefined {
+    return this._connections.get(peerId)?.close$;
+  }
+
   getTabInfo$(peerId: string): Observable<TabInfo> | undefined {
     return this._connections.get(peerId)?.tabInfo$;
   }

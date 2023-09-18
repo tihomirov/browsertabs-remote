@@ -32,10 +32,11 @@ export const ConnectionScreen: FC = observer(() => {
     });
 
     return () => {
+      currentConnectionStore.clearCurrentConnection();
       actionSubbscription?.unsubscribe();
       closeSubbscription?.unsubscribe();
     }
-  }, [currentConnectionStore, peerId])
+  }, [currentConnectionStore, connectionsStore, peerId])
 
   return (
     <View style={styles.container}>
