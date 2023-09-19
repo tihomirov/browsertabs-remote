@@ -4,6 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Action, ActionType} from 'browsertabs-remote-common/src/common';
 
 import {RootStackNavigationProp} from '../../navigation';
+import {useStores} from '../../hooks';
 
 export type ActionItemProps = Readonly<{
   action: Action;
@@ -21,10 +22,11 @@ const actionTitleMap: Record<ActionType, string> = {
 
 const ActionItem: FC<ActionItemProps> = ({action}) => {
   const navigation = useNavigation<RootStackNavigationProp>();
+  const {currentConnectionStore} = useStores();
 
   const onPress = useCallback(() => {
-    console.log('Click on Action', action)
-  }, [navigation, action])
+    currentConnectionStore.sendAction(action);
+  }, [navigation, action, currentConnectionStore])
 
   return (
     <Pressable onPress={onPress}>

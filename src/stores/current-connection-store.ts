@@ -3,6 +3,7 @@ import {IDeviceConnection} from 'browsertabs-remote-common/src/device';
 import {Observable} from 'rxjs';
 
 import {TabInfo} from '../types';
+import {Action} from 'browsertabs-remote-common/src/common';
 
 export class CurrentConnectionStore {
   @observable
@@ -23,5 +24,9 @@ export class CurrentConnectionStore {
 
   clearCurrentConnection() {
     runInAction(() => this._currentConnection = undefined);
+  }
+
+  sendAction(action: Action) {
+    this._currentConnection?.sendAction(action);
   }
 }
