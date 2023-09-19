@@ -1,36 +1,13 @@
-import {FC, useCallback} from 'react';
-import {View, FlatList, StyleSheet, ListRenderItem, Text, Pressable} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {FC} from 'react';
+import {View, FlatList, StyleSheet} from 'react-native';
 import {observer} from 'mobx-react-lite';
 import {Action} from 'browsertabs-remote-common/src/common';
 
-import {RootStackNavigationProp} from '../../navigation';
+import {listRenderActionItem} from '../../components/action-item';
 
 export type ActionListProps = Readonly<{
   actions: ReadonlyArray<Action>;
 }>;
-
-export type ActionItemProps = Readonly<{
-  action: Action;
-}>;
-
-const ActionItem: FC<ActionItemProps> = ({action}) => {
-  const navigation = useNavigation<RootStackNavigationProp>();
-
-  const onPress = useCallback(() => {
-    console.log('Click on Action', action)
-  }, [navigation, action])
-
-  return (
-    <Pressable onPress={onPress}>
-      <View>
-        <Text>Action: ${action.type}</Text>
-      </View>
-    </Pressable>
-  )
-}
-
-const listRenderActionItem: ListRenderItem<Action> = ({item}) => <ActionItem action={item}  />
 
 export const ActionList: FC<ActionListProps> = observer(({actions}) => {
 
@@ -53,7 +30,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     paddingVertical: 12,
     justifyContent: 'space-between',
-    gap: 8,
   },
   listContainer: {
     flexGrow: 1,

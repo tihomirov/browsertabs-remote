@@ -21,11 +21,16 @@ export const ConnectionScreen: FC = observer(() => {
   const peerId = route.params.peerId;
 
   useEffect(() => {
-    currentConnectionStore.setCurrentConnectionId(peerId);
+    const connection = connectionsStore.getConnection(peerId);
 
-    const actionSubbscription = currentConnectionStore.actions$?.subscribe(setActions);
+    if (!connection) {
+      return;
+    }
 
-    const closeSubbscription = currentConnectionStore.close$?.subscribe(() => {
+    currentConnectionStore.setCurrentConnection(connection);
+
+    const actionSubbscription = connection.actions$?.subscribe(setActions);
+    const closeSubbscription = connection.close$?.subscribe(() => {
       currentConnectionStore.clearCurrentConnection();
       connectionsStore.closeConnection(peerId);
       navigation.navigate(ScreenId.Home);

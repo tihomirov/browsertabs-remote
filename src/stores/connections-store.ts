@@ -3,6 +3,7 @@ import {IDeviceConnection} from 'browsertabs-remote-common/src/device';
 import {Observable} from 'rxjs';
 
 import {connectionsService} from '../services';
+// import {ConnectionMock} from '../services/connection-mock';
 import {TabInfo} from '../types';
 
 export class ConnectionsStore {
@@ -12,26 +13,26 @@ export class ConnectionsStore {
     makeObservable(this);
 
     // const connection = [
-    //   new ConnectionMock({
+    //   new ConnectionMock('0001', {
     //     title: 'Google Перекладач',
     //     favIconUrl: 'https://ssl.gstatic.com/translate/favicon.ico'
     //   }),
-    //   new ConnectionMock({
+    //   new ConnectionMock('0002', {
     //     title: 'tihomirov/browsertabs-remote-common',
     //     favIconUrl: 'https://github.githubassets.com/favicons/favicon-dark.png'
     //   }),
-    //   new ConnectionMock({
+    //   new ConnectionMock('0003', {
     //     title: 'tihomirov/browsertabs-remote',
     //     favIconUrl: 'https://github.githubassets.com/favicons/favicon-dark.png'
     //   }),
-    //   new ConnectionMock({
+    //   new ConnectionMock('0004', {
     //     title: 'Сімпсони - 5 сезон 6 серія дивитися онлайн українською',
     //     favIconUrl: 'https://simpsonsua.tv/templates/simpsonsua/images/favicon.ico'
     //   }),
     // ];
 
     // runInAction(() => {
-    //   connection.forEach((c, index) =>  this._connections.set('12312312-' + index, c as unknown as Connection))
+    //   connection.forEach((c) =>  this._connections.set(c.peerId, c))
     // });
 
   }
@@ -47,6 +48,10 @@ export class ConnectionsStore {
   @computed
   get connectionIds(): ReadonlyArray<string> {
     return [...this._connections.keys()];
+  }
+
+  getConnection(peerId: string): IDeviceConnection | undefined {
+    return this._connections.get(peerId);
   }
 
   getConnectionClose$(peerId: string): Observable<void> | undefined {

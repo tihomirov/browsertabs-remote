@@ -1,9 +1,7 @@
 import {makeObservable, observable, runInAction, computed} from 'mobx';
-import {Action} from 'browsertabs-remote-common/src/common';
 import {IDeviceConnection} from 'browsertabs-remote-common/src/device';
 import {Observable} from 'rxjs';
 
-import {connectionsService} from '../services';
 import {TabInfo} from '../types';
 
 export class CurrentConnectionStore {
@@ -19,19 +17,7 @@ export class CurrentConnectionStore {
     return this._currentConnection?.tabInfo$;
   }
 
-  @computed
-  get actions$(): Observable<ReadonlyArray<Action>> | undefined {
-    return this._currentConnection?.actions$;
-  }
-
-  @computed
-  get close$(): Observable<void> | undefined {
-    return this._currentConnection?.close$;
-  }
-
-  setCurrentConnectionId(peerId: string) {
-    const connection = connectionsService.getConnection(peerId);
-
+  setCurrentConnection(connection: IDeviceConnection) {
     runInAction(() => this._currentConnection = connection);
   }
 

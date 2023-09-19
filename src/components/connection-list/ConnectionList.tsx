@@ -22,7 +22,7 @@ export const ConnectionList: FC = observer(() => {
         <FlatList
           data={connectionsStore.connectionIds}         
           renderItem={listRenderConnectionItem}
-          keyExtractor={item => item[0]} 
+          keyExtractor={item => item} 
         />
       </View>
       <View style={styles.buttonContainer}>
