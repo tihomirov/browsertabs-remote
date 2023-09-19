@@ -3,7 +3,7 @@ import {SafeAreaView, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 
 import {RootStore, StoreProvider} from './stores';
-import {RootStack} from './navigation';
+import {RootStack} from './navigation/RootStack';
 
 const rootStore = new RootStore();
 
