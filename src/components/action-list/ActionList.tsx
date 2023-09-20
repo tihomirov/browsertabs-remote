@@ -1,12 +1,12 @@
 import {FC} from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
 import {observer} from 'mobx-react-lite';
-import {Action} from 'browsertabs-remote-common/src/common';
+import {ActionType} from 'browsertabs-remote-common/src/common';
 
 import {listRenderActionItem} from '../../components/action-item';
 
 export type ActionListProps = Readonly<{
-  actions: ReadonlyArray<Action>;
+  actions: ReadonlyArray<ActionType>;
 }>;
 
 export const ActionList: FC<ActionListProps> = observer(({actions}) => {
@@ -17,7 +17,7 @@ export const ActionList: FC<ActionListProps> = observer(({actions}) => {
         <FlatList
           data={actions}         
           renderItem={listRenderActionItem}
-          keyExtractor={item => item.type.toString()} 
+          keyExtractor={item => item.toString()} 
         />
       </View>
     </View>

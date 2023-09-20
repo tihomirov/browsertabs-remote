@@ -1,53 +1,60 @@
-import {FC, useCallback} from 'react';
-import {View, ListRenderItem, Text, Pressable, StyleSheet} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {Action, ActionType} from 'browsertabs-remote-common/src/common';
+import {FC, useCallback, useMemo, useState} from 'react';
+import {View, ListRenderItem, Text, StyleSheet, Button} from 'react-native';
+import {ActionType, Action} from 'browsertabs-remote-common/src/common';
 
-import {RootStackNavigationProp} from '../../navigation';
 import {useStores} from '../../hooks';
+import {actionDataMap} from './action-data-map';
 
-export type ActionItemProps = Readonly<{
-  action: Action;
+type ActionItemProps = Readonly<{
+  actionType: ActionType;
 }>;
 
-const actionTitleMap: Record<ActionType, string> = {
-  [ActionType.Close]: 'Close Tab',
-  [ActionType.Create]: 'Create New Tab',
-  [ActionType.DecreaseZoom]: 'Decrease Zoom',
-  [ActionType.IncreaseZoom]: 'Increase Zoom',
-  [ActionType.Reload]: 'Reload Tab',
-  [ActionType.SetZoom]: 'Set Custom Zoom',
-  [ActionType.ToggleMute]: 'Toggle Mute',
-}
-
-const ActionItem: FC<ActionItemProps> = ({action}) => {
-  const navigation = useNavigation<RootStackNavigationProp>();
+const ActionItem: FC<ActionItemProps> = ({actionType}) => {
   const {currentConnectionStore} = useStores();
+  const {title, ActionDataComponent, initialState} = useMemo(() => actionDataMap[actionType], [actionType])
+  const [actionData, setActionData] = useState<Action>(initialState);
 
-  const onPress = useCallback(() => {
-    currentConnectionStore.sendAction(action);
-  }, [navigation, action, currentConnectionStore])
+  const onSendAction = useCallback(() => {
+    currentConnectionStore.sendAction(actionData);
+  }, [actionData, currentConnectionStore]);
+
+  const onDataChange = useCallback((actionData: Action) => {
+    setActionData(actionData);
+  }, []);
 
   return (
-    <Pressable onPress={onPress}>
-      <View style={styles.container}>
-        <Text>{actionTitleMap[action.type]}</Text>
+    <View style={styles.container}>
+      <View style={styles.top}>
+        <Text>{title}</Text>
+        <Button title="Send" onPress={onSendAction}/>
       </View>
-    </Pressable>
+      <View style={styles.bottom}>
+        {ActionDataComponent && (
+          <ActionDataComponent onDataChange={onDataChange} />
+        )}
+      </View>
+    </View>
   )
 }
 
-export const listRenderActionItem: ListRenderItem<Action> = ({item}) => <ActionItem action={item}  />
+export const listRenderActionItem: ListRenderItem<ActionType> = ({item}) => <ActionItem actionType={item}  />
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginHorizontal: '10%',
+    marginVertical: 8,
+    paddingHorizontal: 8,
     borderColor: '#dfe5eb',
     borderWidth: 1,
     borderRadius: 4,
   },
-});
+  top: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  bottom: {
 
+  }
+});

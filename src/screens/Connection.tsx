@@ -2,7 +2,7 @@ import {FC, useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 import {useRoute, RouteProp} from '@react-navigation/native';
-import {Action} from 'browsertabs-remote-common/src/common';
+import {ActionType} from 'browsertabs-remote-common/src/common';
 import {useNavigation} from '@react-navigation/native';
 
 import {TabInfo} from '../components/tab-info';
@@ -17,7 +17,7 @@ export const ConnectionScreen: FC = observer(() => {
   const route = useRoute<ConnectionScreenRouteProp>();
   const navigation = useNavigation<RootStackNavigationProp>();
   const {currentConnectionStore, connectionsStore} = useStores();
-  const [actions, setActions] = useState<ReadonlyArray<Action>>([])
+  const [actions, setActions] = useState<ReadonlyArray<ActionType>>([])
   const peerId = route.params.peerId;
 
   useEffect(() => {
