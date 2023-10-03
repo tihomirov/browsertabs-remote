@@ -37,4 +37,6 @@ const ConnectionItem: FC<ItemProps> = ({peerId}) => {
   );
 };
 
-export const listRenderConnectionItem: ListRenderItem<string> = ({item}) => <ConnectionItem peerId={item}  />;
+export const listRenderConnectionItem: ListRenderItem<string> = (
+  {item}
+) => <ConnectionItem peerId={item}  />;

@@ -14,7 +14,10 @@ export const AddConnectionScreen: FC = observer(() => {
   const theme = useColorScheme();
   const isDarkTheme = theme === 'dark';
 
-  const buttonClassName = useMemo(() => [styles.button, isDarkTheme ? styles.buttonDark : styles.buttonLight], [isDarkTheme]);
+  const buttonClassName = useMemo(
+    () => [styles.button, isDarkTheme ? styles.buttonDark : styles.buttonLight],
+    [isDarkTheme]
+  );
 
   const onPressScanQR = useCallback(() => {
     console.log('Open Camera and scan QR');

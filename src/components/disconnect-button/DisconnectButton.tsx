@@ -16,7 +16,10 @@ export const DisconnectButton: FC<DisconnectButtonProps> = ({peerId}) => {
   const theme = useColorScheme();
   const isDarkTheme = theme === 'dark';
 
-  const buttonClassName = useMemo(() => [styles.button, isDarkTheme ? styles.buttonDark : styles.buttonLight], [isDarkTheme]);
+  const buttonClassName = useMemo(
+    () => [styles.button, isDarkTheme ? styles.buttonDark : styles.buttonLight],
+    [isDarkTheme]
+  );
 
   const onClick = useCallback(() => {
     connectionsStore.closeConnection(peerId);

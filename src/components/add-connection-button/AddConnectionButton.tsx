@@ -10,7 +10,10 @@ export const AddConnectionButton: FC = () => {
   const navigation = useNavigation<RootStackNavigationProp>();
   const isDarkTheme = theme === 'dark';
 
-  const navigateToAddConnection = useCallback(() => navigation.navigate(ScreenId.AddConnection), [navigation]);
+  const navigateToAddConnection = useCallback(
+    () => navigation.navigate(ScreenId.AddConnection),
+    [navigation]
+  );
 
   return (
     <View style={[styles.button, isDarkTheme ? styles.buttonDark : styles.buttonLight]}>

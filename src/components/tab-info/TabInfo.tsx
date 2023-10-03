@@ -16,8 +16,14 @@ export const TabInfo: FC<TabInfoProps> = ({peerId}) => {
   const isDarkTheme = theme === 'dark';
   const [tabInfo, setTabInfo] = useState<TabInfoType | undefined>(undefined);
 
-  const containerClassName = useMemo(() => [styles.container, isDarkTheme ? styles.containerDark : styles.containerLight], [isDarkTheme]);
-  const titleClassName = useMemo(() => [styles.title, isDarkTheme ? styles.titleDark : styles.titleLight], [isDarkTheme]);
+  const containerClassName = useMemo(
+    () => [styles.container, isDarkTheme ? styles.containerDark : styles.containerLight],
+    [isDarkTheme]
+  );
+  const titleClassName = useMemo(
+    () => [styles.title, isDarkTheme ? styles.titleDark : styles.titleLight],
+    [isDarkTheme]
+  );
 
   useEffect(() => {
     const subbscription = connectionsStore.getTabInfo$(peerId)?.subscribe(setTabInfo);

@@ -10,8 +10,16 @@ export const RootStack: FC = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name={ScreenId.Home} component={HomeScreen} options={{title: 'Home'}} />
-      <Stack.Screen name={ScreenId.AddConnection} component={AddConnectionScreen} options={{title: 'Add Connection'}}/>
-      <Stack.Screen name={ScreenId.Connection} component={ConnectionScreen} options={{title: 'Connection'}}/>
+      <Stack.Screen
+        name={ScreenId.AddConnection}
+        component={AddConnectionScreen}
+        options={{title: 'Add Connection'}}
+      />
+      <Stack.Screen
+        name={ScreenId.Connection}
+        component={ConnectionScreen}
+        options={{title: 'Connection'}}
+      />
     </Stack.Navigator>
   );
 };

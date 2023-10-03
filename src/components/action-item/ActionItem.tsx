@@ -11,7 +11,10 @@ type ActionItemProps = Readonly<{
 
 const ActionItem: FC<ActionItemProps> = ({actionType}) => {
   const {currentConnectionStore} = useStores();
-  const {title, ActionDataComponent, initialState} = useMemo(() => actionDataMap[actionType], [actionType]);
+  const {title, ActionDataComponent, initialState} = useMemo(
+    () => actionDataMap[actionType],
+    [actionType]
+  );
   const [actionData, setActionData] = useState<Action>(initialState);
 
   const onSendAction = useCallback(() => {
@@ -37,7 +40,9 @@ const ActionItem: FC<ActionItemProps> = ({actionType}) => {
   );
 };
 
-export const listRenderActionItem: ListRenderItem<ActionType> = ({item}) => <ActionItem actionType={item}  />;
+export const listRenderActionItem: ListRenderItem<ActionType> = (
+  {item}
+) => <ActionItem actionType={item}  />;
 
 const styles = StyleSheet.create({
   container: {
