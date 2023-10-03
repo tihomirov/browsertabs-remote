@@ -1,6 +1,6 @@
+import {Action,ActionType} from 'browsertabs-remote-common/src/common';
 import {FC, useCallback, useMemo, useState} from 'react';
-import {View, ListRenderItem, Text, StyleSheet, Button} from 'react-native';
-import {ActionType, Action} from 'browsertabs-remote-common/src/common';
+import {Button,ListRenderItem, StyleSheet, Text, View} from 'react-native';
 
 import {useStores} from '../../hooks';
 import {actionDataMap} from './action-data-map';
@@ -11,7 +11,7 @@ type ActionItemProps = Readonly<{
 
 const ActionItem: FC<ActionItemProps> = ({actionType}) => {
   const {currentConnectionStore} = useStores();
-  const {title, ActionDataComponent, initialState} = useMemo(() => actionDataMap[actionType], [actionType])
+  const {title, ActionDataComponent, initialState} = useMemo(() => actionDataMap[actionType], [actionType]);
   const [actionData, setActionData] = useState<Action>(initialState);
 
   const onSendAction = useCallback(() => {
@@ -34,10 +34,10 @@ const ActionItem: FC<ActionItemProps> = ({actionType}) => {
         )}
       </View>
     </View>
-  )
-}
+  );
+};
 
-export const listRenderActionItem: ListRenderItem<ActionType> = ({item}) => <ActionItem actionType={item}  />
+export const listRenderActionItem: ListRenderItem<ActionType> = ({item}) => <ActionItem actionType={item}  />;
 
 const styles = StyleSheet.create({
   container: {

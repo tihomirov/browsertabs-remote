@@ -1,15 +1,15 @@
-import type {DataConnection, PeerErrorType} from 'peerjs';
-import {Observable, Subject, of} from 'rxjs';
-import {delay} from 'rxjs/operators';
 import {Action, ActionType} from 'browsertabs-remote-common/src/common';
 import {IDeviceConnection} from 'browsertabs-remote-common/src/device';
+import type {DataConnection, PeerErrorType} from 'peerjs';
+import {Observable, of,Subject} from 'rxjs';
+import {delay} from 'rxjs/operators';
 
 import {TabInfo} from '../types';
 
 export class ConnectionMock implements IDeviceConnection {
-  readonly open$: Observable<void>;  
+  readonly open$: Observable<void>;
   readonly error$: Observable<{type: PeerErrorType}>;
-  readonly close$: Observable<void>;  
+  readonly close$: Observable<void>;
   readonly message$: Observable<unknown>;
   private readonly _connection: DataConnection;
   private readonly _unsubscribeSubject$ = new Subject<void>();
@@ -18,7 +18,7 @@ export class ConnectionMock implements IDeviceConnection {
   }
 
   get tabInfo$(): Observable<TabInfo> {
-    return of(this._mockTabInfo).pipe(delay(5000))
+    return of(this._mockTabInfo).pipe(delay(5000));
   }
 
   get actions$(): Observable<ReadonlyArray<Action>> {

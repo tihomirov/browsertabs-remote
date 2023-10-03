@@ -1,9 +1,9 @@
-import {makeObservable, observable, runInAction, computed} from 'mobx';
+import {Action} from 'browsertabs-remote-common/src/common';
 import {IDeviceConnection} from 'browsertabs-remote-common/src/device';
+import {computed,makeObservable, observable, runInAction} from 'mobx';
 import {Observable} from 'rxjs';
 
 import {TabInfo} from '../types';
-import {Action} from 'browsertabs-remote-common/src/common';
 
 export class CurrentConnectionStore {
   @observable

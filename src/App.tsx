@@ -1,9 +1,9 @@
+import {NavigationContainer} from '@react-navigation/native';
 import {FC} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
 
-import {RootStore, StoreProvider} from './stores';
 import {RootStack} from './navigation/RootStack';
+import {RootStore, StoreProvider} from './stores';
 
 const rootStore = new RootStore();
 
@@ -17,7 +17,7 @@ export const App: FC = () => {
       </StoreProvider>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

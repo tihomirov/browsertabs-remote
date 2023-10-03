@@ -1,14 +1,14 @@
+import {useNavigation} from '@react-navigation/native';
 import {FC, useCallback, useEffect} from 'react';
 import {ListRenderItem, Pressable} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 
+import {useStores} from '../../hooks';
 import {RootStackNavigationProp, ScreenId} from '../../navigation';
 import {TabInfo} from '../tab-info';
-import {useStores} from '../../hooks';
 
 type ItemProps = Readonly<{
   peerId: string;
-}>
+}>;
 
 const ConnectionItem: FC<ItemProps> = ({peerId}) => {
   const navigation = useNavigation<RootStackNavigationProp>();
@@ -17,7 +17,7 @@ const ConnectionItem: FC<ItemProps> = ({peerId}) => {
   const onPress = useCallback(() => {
     navigation.navigate(ScreenId.Connection, {
       peerId: peerId
-    })
+    });
   }, [navigation, peerId]);
 
   useEffect(() => {
@@ -27,14 +27,14 @@ const ConnectionItem: FC<ItemProps> = ({peerId}) => {
 
     return () => {
       closeSubbscription?.unsubscribe();
-    }
-  }, [connectionsStore, peerId])
+    };
+  }, [connectionsStore, peerId]);
 
   return (
     <Pressable onPress={onPress}>
       <TabInfo peerId={peerId} />
     </Pressable>
-  )
-}
+  );
+};
 
-export const listRenderConnectionItem: ListRenderItem<string> = ({item}) => <ConnectionItem peerId={item}  />
+export const listRenderConnectionItem: ListRenderItem<string> = ({item}) => <ConnectionItem peerId={item}  />;

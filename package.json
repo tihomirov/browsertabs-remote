@@ -11,12 +11,12 @@
     "lint": "eslint --ext .tsx --ext .ts src/"
   },
   "dependencies": {
-    "browsertabs-remote-common": "git@github.com:tihomirov/browsertabs-remote-common.git#6a910dc52d0f87050df19ea90f3fd6dd704e4c63",
     "@config-plugins/react-native-webrtc": "~6.0.0",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
     "@react-navigation/stack": "^6.3.17",
     "@types/react": "~18.0.27",
+    "browsertabs-remote-common": "git@github.com:tihomirov/browsertabs-remote-common.git#6a910dc52d0f87050df19ea90f3fd6dd704e4c63",
     "expo": "~48.0.18",
     "expo-splash-screen": "~0.18.2",
     "expo-status-bar": "~1.4.4",
@@ -40,7 +40,8 @@
     "buffer": "^6.0.3",
     "eslint": "^8.20.0",
     "eslint-import-resolver-typescript": "^3.5.5",
-    "eslint-plugin-react": "^7.33.1"
+    "eslint-plugin-react": "^7.33.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0"
   },
   "private": true
 }

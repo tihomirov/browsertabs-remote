@@ -1,14 +1,14 @@
 import {FC, useEffect, useMemo, useState} from 'react';
-import {StyleSheet, Text, View, Image, useColorScheme} from 'react-native';
+import {Image, StyleSheet, Text, useColorScheme,View} from 'react-native';
 
-import {Loader} from '../loader';
-import {TabInfo as TabInfoType} from '../../types';
 import {colors} from '../../colors';
 import {useStores} from '../../hooks';
+import {TabInfo as TabInfoType} from '../../types';
+import {Loader} from '../loader';
 
 type TabInfoProps = Readonly<{
   peerId: string,
-}>
+}>;
 
 export const TabInfo: FC<TabInfoProps> = ({peerId}) => {
   const {connectionsStore} = useStores();
@@ -16,20 +16,20 @@ export const TabInfo: FC<TabInfoProps> = ({peerId}) => {
   const isDarkTheme = theme === 'dark';
   const [tabInfo, setTabInfo] = useState<TabInfoType | undefined>(undefined);
 
-  const containerClassName = useMemo(() => [styles.container, isDarkTheme ? styles.containerDark : styles.containerLight], [isDarkTheme])
-  const titleClassName = useMemo(() => [styles.title, isDarkTheme ? styles.titleDark : styles.titleLight], [isDarkTheme])
+  const containerClassName = useMemo(() => [styles.container, isDarkTheme ? styles.containerDark : styles.containerLight], [isDarkTheme]);
+  const titleClassName = useMemo(() => [styles.title, isDarkTheme ? styles.titleDark : styles.titleLight], [isDarkTheme]);
 
   useEffect(() => {
     const subbscription = connectionsStore.getTabInfo$(peerId)?.subscribe(setTabInfo);
     return () => subbscription?.unsubscribe();
-  }, [peerId])
+  }, [peerId]);
 
   if (!tabInfo) {
     return (
       <View style={containerClassName}>
         <Loader size={20} />
       </View>
-    )
+    );
   }
 
   return (
@@ -39,8 +39,8 @@ export const TabInfo: FC<TabInfoProps> = ({peerId}) => {
       )}
       <Text style={titleClassName}>{tabInfo.title}</Text>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

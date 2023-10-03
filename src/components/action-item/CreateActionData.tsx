@@ -1,7 +1,6 @@
-import {FC, useEffect, useState} from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
 import {ActionType, CreateAction} from 'browsertabs-remote-common/src/common';
-
+import {FC, useEffect, useState} from 'react';
+import {StyleSheet,TextInput, View} from 'react-native';
 
 export type CreateActionDataProps = Readonly<{
   onDataChange: (data: CreateAction) => void;
@@ -15,7 +14,7 @@ export const CreateActionData: FC<CreateActionDataProps> = ({onDataChange}) => {
       url,
       type: ActionType.Create
     });
-  }, [url])
+  }, [url]);
 
   return (
     <View>
@@ -25,8 +24,8 @@ export const CreateActionData: FC<CreateActionDataProps> = ({onDataChange}) => {
         value={url}
       />
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   input: {

@@ -1,16 +1,16 @@
-import {FC, useCallback} from 'react';
-import {StyleSheet, View, useColorScheme, Button} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {FC, useCallback} from 'react';
+import {Button,StyleSheet, useColorScheme, View} from 'react-native';
 
-import {RootStackNavigationProp, ScreenId} from '../../navigation';
 import {colors} from '../../colors';
+import {RootStackNavigationProp, ScreenId} from '../../navigation';
 
 export const AddConnectionButton: FC = () => {
   const theme = useColorScheme();
   const navigation = useNavigation<RootStackNavigationProp>();
   const isDarkTheme = theme === 'dark';
 
-  const navigateToAddConnection = useCallback(() => navigation.navigate(ScreenId.AddConnection), [navigation])
+  const navigateToAddConnection = useCallback(() => navigation.navigate(ScreenId.AddConnection), [navigation]);
 
   return (
     <View style={[styles.button, isDarkTheme ? styles.buttonDark : styles.buttonLight]}>
@@ -19,8 +19,8 @@ export const AddConnectionButton: FC = () => {
         onPress={navigateToAddConnection}
       />
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   button: {

@@ -1,7 +1,7 @@
-import {FC} from 'react';
-import {View, FlatList, StyleSheet} from 'react-native';
-import {observer} from 'mobx-react-lite';
 import {ActionType} from 'browsertabs-remote-common/src/common';
+import {observer} from 'mobx-react-lite';
+import {FC} from 'react';
+import {FlatList, StyleSheet,View} from 'react-native';
 
 import {listRenderActionItem} from '../../components/action-item';
 
@@ -15,9 +15,9 @@ export const ActionList: FC<ActionListProps> = observer(({actions}) => {
     <View style={styles.container}>
       <View style={styles.listContainer}>
         <FlatList
-          data={actions}         
+          data={actions}
           renderItem={listRenderActionItem}
-          keyExtractor={item => item.toString()} 
+          keyExtractor={item => item.toString()}
         />
       </View>
     </View>

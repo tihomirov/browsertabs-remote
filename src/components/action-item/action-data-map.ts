@@ -1,5 +1,5 @@
+import {Action,ActionType} from 'browsertabs-remote-common/src/common';
 import {FC} from 'react';
-import {ActionType, Action} from 'browsertabs-remote-common/src/common';
 
 import {CreateActionData} from './CreateActionData';
 import {SetZoomActionData} from './SetZoomActionData';

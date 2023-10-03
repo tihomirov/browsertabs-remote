@@ -1,15 +1,14 @@
-import {FC, useMemo, useCallback} from 'react';
-import {StyleSheet, View, useColorScheme, Button} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {FC, useCallback,useMemo} from 'react';
+import {Button,StyleSheet, useColorScheme, View} from 'react-native';
 
-
-import {RootStackNavigationProp, ScreenId} from '../../navigation';
-import {useStores} from '../../hooks';
 import {colors} from '../../colors';
+import {useStores} from '../../hooks';
+import {RootStackNavigationProp, ScreenId} from '../../navigation';
 
 type DisconnectButtonProps = Readonly<{
   peerId: string,
-}>
+}>;
 
 export const DisconnectButton: FC<DisconnectButtonProps> = ({peerId}) => {
   const navigation = useNavigation<RootStackNavigationProp>();
@@ -17,7 +16,7 @@ export const DisconnectButton: FC<DisconnectButtonProps> = ({peerId}) => {
   const theme = useColorScheme();
   const isDarkTheme = theme === 'dark';
 
-  const buttonClassName = useMemo(() => [styles.button, isDarkTheme ? styles.buttonDark : styles.buttonLight], [isDarkTheme])
+  const buttonClassName = useMemo(() => [styles.button, isDarkTheme ? styles.buttonDark : styles.buttonLight], [isDarkTheme]);
 
   const onClick = useCallback(() => {
     connectionsStore.closeConnection(peerId);
@@ -28,7 +27,7 @@ export const DisconnectButton: FC<DisconnectButtonProps> = ({peerId}) => {
     <View style={buttonClassName}>
       <Button onPress={onClick} title="Disconnect" color="#841584"/>
     </View>
-  )};
+  );};
 
 const styles = StyleSheet.create({
   button: {

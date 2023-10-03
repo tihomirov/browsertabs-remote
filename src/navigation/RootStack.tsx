@@ -1,7 +1,7 @@
-import {FC} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {FC} from 'react';
 
-import {HomeScreen, AddConnectionScreen, ConnectionScreen} from '../screens';
+import {AddConnectionScreen, ConnectionScreen,HomeScreen} from '../screens';
 import {RootStackParamList, ScreenId} from './types';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -14,4 +14,4 @@ export const RootStack: FC = () => {
       <Stack.Screen name={ScreenId.Connection} component={ConnectionScreen} options={{title: 'Connection'}}/>
     </Stack.Navigator>
   );
-}
+};

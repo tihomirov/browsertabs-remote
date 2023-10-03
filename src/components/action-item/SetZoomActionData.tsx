@@ -1,7 +1,6 @@
-import {FC, useEffect, useState} from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
 import {ActionType, SetZoomAction} from 'browsertabs-remote-common/src/common';
-
+import {FC, useEffect, useState} from 'react';
+import {StyleSheet,TextInput, View} from 'react-native';
 
 export type SetZoomActionDataProps = Readonly<{
   onDataChange: (data: SetZoomAction) => void;
@@ -15,7 +14,7 @@ export const SetZoomActionData: FC<SetZoomActionDataProps> = ({onDataChange}) =>
       zoomFactor: parseInt(zoomFactor),
       type: ActionType.SetZoom
     });
-  }, [zoomFactor])
+  }, [zoomFactor]);
 
   return (
     <View>
@@ -26,8 +25,8 @@ export const SetZoomActionData: FC<SetZoomActionDataProps> = ({onDataChange}) =>
         value={zoomFactor}
       />
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   input: {

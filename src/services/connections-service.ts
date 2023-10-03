@@ -1,6 +1,6 @@
+import {IDeviceConnection,PeerDeviceConnection} from 'browsertabs-remote-common/src/device';
 import type {Peer as PeerType} from 'peerjs';
 import Peer from 'react-native-peerjs';
-import {PeerDeviceConnection, IDeviceConnection} from 'browsertabs-remote-common/src/device';
 
 class PeerConnectionsService {
   private readonly _peer: PeerType;
@@ -11,7 +11,7 @@ class PeerConnectionsService {
   }
 
   createConnection(peerId: string): IDeviceConnection {
-    const connection = new PeerDeviceConnection(this._peer, peerId)
+    const connection = new PeerDeviceConnection(this._peer, peerId);
 
     this._connections.set(peerId, connection);
 

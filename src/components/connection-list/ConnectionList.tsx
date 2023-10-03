@@ -1,9 +1,9 @@
-import {FC} from 'react';
-import {View, FlatList, StyleSheet} from 'react-native';
 import {observer} from 'mobx-react-lite';
+import {FC} from 'react';
+import {FlatList, StyleSheet,View} from 'react-native';
 
-import {listRenderConnectionItem} from '../../components/connection-item';
 import {AddConnectionButton} from '../../components/add-connection-button';
+import {listRenderConnectionItem} from '../../components/connection-item';
 import {useStores} from '../../hooks';
 import {ConnectionListEmpty} from './ConnectionListEmpty';
 
@@ -20,9 +20,9 @@ export const ConnectionList: FC = observer(() => {
       <View style={styles.listContainer}>
         <ConnectionListEmpty />
         <FlatList
-          data={connectionsStore.connectionIds}         
+          data={connectionsStore.connectionIds}
           renderItem={listRenderConnectionItem}
-          keyExtractor={item => item} 
+          keyExtractor={item => item}
         />
       </View>
       <View style={styles.buttonContainer}>

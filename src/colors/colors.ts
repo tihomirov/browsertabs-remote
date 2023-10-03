@@ -3,4 +3,4 @@ export const colors = {
   backgroundColorDark: '#000624',
   fontColorLight: '#000624',
   fontColorDark: '#ECEFF3',
-}
+};

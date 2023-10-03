@@ -1,11 +1,11 @@
-import {FC, useCallback, useState, useMemo} from 'react';
-import {StyleSheet, Text, View, TextInput, Button, useColorScheme} from 'react-native';
+import {StackActions,useNavigation} from '@react-navigation/native';
 import {observer} from 'mobx-react-lite';
-import {useNavigation, StackActions} from '@react-navigation/native';
+import {FC, useCallback, useMemo,useState} from 'react';
+import {Button, StyleSheet, Text, TextInput, useColorScheme,View} from 'react-native';
 
-import {RootStackNavigationProp, ScreenId} from '../navigation';
 import {colors} from '../colors';
 import {useStores} from '../hooks';
+import {RootStackNavigationProp, ScreenId} from '../navigation';
 
 export const AddConnectionScreen: FC = observer(() => {
   const navigation = useNavigation<RootStackNavigationProp>();
@@ -14,10 +14,10 @@ export const AddConnectionScreen: FC = observer(() => {
   const theme = useColorScheme();
   const isDarkTheme = theme === 'dark';
 
-  const buttonClassName = useMemo(() => [styles.button, isDarkTheme ? styles.buttonDark : styles.buttonLight], [isDarkTheme])
+  const buttonClassName = useMemo(() => [styles.button, isDarkTheme ? styles.buttonDark : styles.buttonLight], [isDarkTheme]);
 
   const onPressScanQR = useCallback(() => {
-    console.log('Open Camera and scan QR')
+    console.log('Open Camera and scan QR');
   }, []);
 
   const onPressConnect = useCallback(() => {
@@ -47,7 +47,7 @@ export const AddConnectionScreen: FC = observer(() => {
       <View style={buttonClassName}>
         <Button onPress={onPressConnect} title="Connect" color="#841584"/>
       </View>
-      
+
       {connectionsStore.hasConnections && (
         <Button onPress={onPressClose} title="Close" color="#841584"/>
       )}

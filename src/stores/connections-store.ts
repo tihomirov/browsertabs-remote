@@ -1,5 +1,5 @@
-import {makeObservable, observable, runInAction, computed} from 'mobx';
 import {IDeviceConnection} from 'browsertabs-remote-common/src/device';
+import {computed,makeObservable, observable, runInAction} from 'mobx';
 import {Observable} from 'rxjs';
 
 import {connectionsService} from '../services';
