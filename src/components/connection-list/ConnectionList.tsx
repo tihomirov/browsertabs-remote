@@ -18,12 +18,16 @@ export const ConnectionList: FC = observer(() => {
   return (
     <View style={styles.container}>
       <View style={styles.listContainer}>
-        <ConnectionListEmpty />
-        <FlatList
-          data={connectionsStore.connectionIds}
-          renderItem={listRenderConnectionItem}
-          keyExtractor={item => item}
-        />
+        {
+          connectionsStore.connectionIds.length === 0
+            ? <View style={styles.empty}><ConnectionListEmpty /></View>
+            : <FlatList
+                data={connectionsStore.connectionIds}
+                renderItem={listRenderConnectionItem}
+                keyExtractor={item => item}
+              />
+        }
+
       </View>
       <View style={styles.buttonContainer}>
         <AddConnectionButton />
@@ -42,6 +46,10 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flexGrow: 1,
+  },
+  empty: {
+    flexGrow: 1,
+    justifyContent: 'center',
   },
   buttonContainer: {
     paddingHorizontal: '10%',
