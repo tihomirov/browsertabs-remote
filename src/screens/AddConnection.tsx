@@ -1,8 +1,8 @@
 import {StackActions, useNavigation} from '@react-navigation/native';
 import {observer} from 'mobx-react-lite';
-import {FC, useCallback, useState} from 'react';
+import {FC, useCallback, useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Button, Divider, Text, TextInput} from 'react-native-paper';
+import {Button, Divider, MD3Colors, Text, TextInput} from 'react-native-paper';
 
 import {useStores} from '../hooks';
 import {RootStackNavigationProp, ScreenId} from '../navigation';
@@ -12,9 +12,11 @@ export const AddConnectionScreen: FC = observer(() => {
   const navigation = useNavigation<RootStackNavigationProp>();
   const {connectionsStore} = useStores();
   const [peerId, setPeerId] = useState('');
+  const [inputError, setInputError] = useState(false);
 
   const onPressConnect = useCallback(() => {
     if (!peerId) {
+      setInputError(true);
       return;
     }
 
@@ -23,6 +25,12 @@ export const AddConnectionScreen: FC = observer(() => {
       peerId: peerId
     }));
   }, [connectionsStore, peerId, navigation]);
+
+  useEffect(() => {
+    if (peerId) {
+      setInputError(false);
+    }
+  }, [peerId]);
 
   return (
     <View style={styles.container}>
@@ -35,7 +43,15 @@ export const AddConnectionScreen: FC = observer(() => {
       <View style={styles.inputContainer}>
         <Divider />
         <Text variant="bodyMedium">Or you can type Connection ID manually in input below</Text>
-        <TextInput label="Connection ID"  onChangeText={setPeerId} value={peerId} />
+        <TextInput
+          label="Connection ID"
+          onChangeText={setPeerId}
+          value={peerId}
+          error={inputError}
+        />
+        {inputError && (
+          <Text style={styles.errorLabel} variant="labelMedium">Field is requiered</Text>
+        )}
       </View>
 
       <View style={styles.buttonContainer}>
@@ -70,5 +86,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     paddingHorizontal: '10%',
+  },
+  errorLabel: {
+    color: MD3Colors.error40,
   },
 });
