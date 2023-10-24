@@ -1,27 +1,17 @@
-import {StackActions,useNavigation} from '@react-navigation/native';
+import {StackActions, useNavigation} from '@react-navigation/native';
 import {observer} from 'mobx-react-lite';
-import {FC, useCallback, useMemo,useState} from 'react';
-import {Button, StyleSheet, Text, TextInput, useColorScheme,View} from 'react-native';
+import {FC, useCallback, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {Button, Divider, Text, TextInput} from 'react-native-paper';
 
-import {colors} from '../colors';
 import {useStores} from '../hooks';
 import {RootStackNavigationProp, ScreenId} from '../navigation';
+import {QrCodeCamera} from './QrCodeCamera';
 
 export const AddConnectionScreen: FC = observer(() => {
   const navigation = useNavigation<RootStackNavigationProp>();
   const {connectionsStore} = useStores();
   const [peerId, setPeerId] = useState('');
-  const theme = useColorScheme();
-  const isDarkTheme = theme === 'dark';
-
-  const buttonClassName = useMemo(
-    () => [styles.button, isDarkTheme ? styles.buttonDark : styles.buttonLight],
-    [isDarkTheme]
-  );
-
-  const onPressScanQR = useCallback(() => {
-    console.log('Open Camera and scan QR');
-  }, []);
 
   const onPressConnect = useCallback(() => {
     if (!peerId) {
@@ -34,60 +24,51 @@ export const AddConnectionScreen: FC = observer(() => {
     }));
   }, [connectionsStore, peerId, navigation]);
 
-  const onPressClose = useCallback(() => {
-    connectionsStore.closeConnection(peerId);
-  }, [connectionsStore, peerId]);
-
   return (
     <View style={styles.container}>
-      <View style={buttonClassName}>
-        <Button onPress={onPressScanQR}  title="Scan QR code" />
+      <Text variant="bodyLarge">Scan QR from chrome extention</Text>
+
+      <View style={styles.cameraContainer}>
+        <QrCodeCamera />
       </View>
 
-      <Text>or you can type Connection ID manually in input below</Text>
-      <TextInput style={styles.input} onChangeText={setPeerId} value={peerId} />
-
-      <View style={buttonClassName}>
-        <Button onPress={onPressConnect} title="Connect" color="#841584"/>
+      <View style={styles.inputContainer}>
+        <Divider />
+        <Text variant="bodyMedium">Or you can type Connection ID manually in input below</Text>
+        <TextInput label="Connection ID"  onChangeText={setPeerId} value={peerId} />
       </View>
 
-      {connectionsStore.hasConnections && (
-        <Button onPress={onPressClose} title="Close" color="#841584"/>
-      )}
+      <View style={styles.buttonContainer}>
+        <Button mode="contained" onPress={onPressConnect}>
+          Connect
+        </Button>
+      </View>
     </View>
   );
 });
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
     width: '100%',
-    backgroundColor: '#fff',
-    paddingVertical: 24,
+    height: '100%',
     display: 'flex',
     alignItems: 'center',
     gap: 8,
+    paddingVertical: 8,
+    backgroundColor: '#fff',
   },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
+  cameraContainer: {
+    width: '100%',
+    height: '50%',
   },
-  button: {
-    width: '80%',
-    padding: 4,
-    marginVertical: 4,
-    borderColor: '#dfe5eb',
-    borderWidth: 1,
-    borderRadius: 4,
+  inputContainer: {
+    padding: 8,
+    width: '100%',
+    display: 'flex',
+    gap: 8,
   },
-  buttonLight: {
-    backgroundColor: colors.backgroundColorLight,
-    color: colors.fontColorLight,
-  },
-  buttonDark: {
-    backgroundColor: colors.backgroundColorDark,
-    color: colors.fontColorDark,
+  buttonContainer: {
+    width: '100%',
+    paddingHorizontal: '10%',
   },
 });
