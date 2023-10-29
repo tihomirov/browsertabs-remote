@@ -15,6 +15,7 @@ export const ActionList: FC<ActionListProps> = observer(({actions}) => {
     <View style={styles.container}>
       <View style={styles.listContainer}>
         <FlatList
+          scrollEnabled={false}
           data={actions}
           renderItem={listRenderActionItem}
           keyExtractor={item => item.toString()}

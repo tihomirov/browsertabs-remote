@@ -1,12 +1,11 @@
-import {RouteProp,useRoute} from '@react-navigation/native';
+import {RouteProp, useRoute} from '@react-navigation/native';
 import {useNavigation} from '@react-navigation/native';
 import {ActionType} from 'browsertabs-remote-common/src/common';
 import {observer} from 'mobx-react-lite';
 import {FC, useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView,StyleSheet} from 'react-native';
 
 import {ActionList} from '../components/action-list';
-import {DisconnectButton} from '../components/disconnect-button';
 import {TabInfo} from '../components/tab-info';
 import {useStores} from '../hooks';
 import {RootStackNavigationProp, RootStackParamList, ScreenId} from '../navigation';
@@ -44,11 +43,10 @@ export const ConnectionScreen: FC = observer(() => {
   }, [currentConnectionStore, connectionsStore, peerId]);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <TabInfo peerId={peerId} />
-      <DisconnectButton peerId={peerId} />
       <ActionList actions={actions} />
-    </View>
+    </ScrollView>
   );
 });
 

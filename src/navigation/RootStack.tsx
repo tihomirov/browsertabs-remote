@@ -1,7 +1,8 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {FC} from 'react';
 
-import {AddConnectionScreen, ConnectionScreen,HomeScreen} from '../screens';
+import {AddConnectionScreen, ConnectionScreen, HomeScreen} from '../screens';
+import {ConnectionHeaderRight} from './ConnectionHeaderRight';
 import {RootStackParamList, ScreenId} from './types';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -9,7 +10,11 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export const RootStack: FC = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name={ScreenId.Home} component={HomeScreen} options={{title: 'Home'}} />
+      <Stack.Screen
+        name={ScreenId.Home}
+        component={HomeScreen}
+        options={{title: 'Home'}}
+      />
       <Stack.Screen
         name={ScreenId.AddConnection}
         component={AddConnectionScreen}
@@ -18,7 +23,7 @@ export const RootStack: FC = () => {
       <Stack.Screen
         name={ScreenId.Connection}
         component={ConnectionScreen}
-        options={{title: 'Connection'}}
+        options={{title: 'Connection', headerRight: () => <ConnectionHeaderRight />}}
       />
     </Stack.Navigator>
   );
