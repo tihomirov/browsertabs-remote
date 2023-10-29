@@ -27,7 +27,8 @@
         "object-curly-spacing": ["error", "never", { "objectsInObjects": false }],
         "simple-import-sort/imports": "error",
         "simple-import-sort/exports": "error",
-        "react/react-in-jsx-scope": "off"
+        "react/react-in-jsx-scope": "off",
+        "react/prop-types": "off"
     },
     "settings": {
         "import/resolver": {
